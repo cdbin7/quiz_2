@@ -6,6 +6,9 @@
 import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import "bootstrap"
 
 Rails.start()
 ActiveStorage.start()
+
+console.log("hello from app/javascript/packs/application.js")

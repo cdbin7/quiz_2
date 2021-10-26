@@ -1,0 +1,15 @@
+<div class="newForm">
+  <%= form_with(model: @idea) do |form| %>
+    <div class="mb-3 form-group">
+      <%= form.label :title, class: "form-label fs-5" %>
+      <%= form.text_field :title, class: "form-control" %>
+    </div>
+    <div>
+      <%= form.label :description, class: "form-label fs-5" %>
+      <%= form.text_area :description, cols: 100, rows: 5, class: "form-control"%>
+    </div>
+    <br>
+    <%= form.submit class: "btn btn-outline-primary" %>
+
+  <% end %>
+</div>
