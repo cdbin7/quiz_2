@@ -1,0 +1,65 @@
+<div class="showPage">
+
+<p>
+<h1>  <%= @idea.title %> </h1>
+</p>
+
+<p>
+  <%= @idea.description %> 
+</p>
+
+<small>Created by: <%= @idea.user.name%> </small>
+
+<p>
+  <small>Posted <%= time_ago_in_words(@idea.created_at)%> ago </small>
+</p>
+
+
+
+<% if @like.present? %>
+  <%= link_to "Liked", like_path(@like), method: :delete, class: "btn btn-outline-info btn-sm"%>
+<% else %>
+    <% if can?(:like, @idea) %>
+    <%= link_to "Like", idea_likes_path(@idea), method: :post, class: "btn btn-info btn-sm" %>
+    <% end %>
+<%end%>
+<small> • Likes: <%= @idea.likes.count %> </small>
+
+
+<% if can?(:crud, @idea) %>
+<div style="margin-bottom: 50px">
+  <%= link_to "Edit", edit_idea_path(@idea), class: "btn btn-outline-primary" %>
+  <%= link_to "Delete", idea_path(@idea), method: :delete, data:{confirm: "Are you sure you want to delete?"}, class: "btn btn-outline-primary" %>
+</div>
+<% end %>
+
+
+
+<%= form_with(model: [@idea, @review]) do |form|%>
+  <p>
+    <h3><%= form.label :Review%></h3>
+    <%= form.text_area :body, cols: 100, rows: 5, class: "form-control"%>
+  </p>
+    <%= form.submit "Review", class: "btn btn-outline-primary"%>
+<% end %>
+
+
+
+<div style="margin-top: 50px;">
+ <h3 style="margin-bottom: 20px;">Review List</h3>
+  <% @reviews.each do |review| %>
+    <div style="margin-bottom: 10px;">
+    - <%= review.body %>
+    <small> Answered <%= time_ago_in_words(review.created_at) %> </small>
+    •
+    <small> Created by: <%= review.user.name%> </small>
+    •
+      <% if can?(:crud, review) %>
+        <small><%= link_to "Delete", idea_review_path(@idea, review), method: :delete%> </small>
+      <% end %>
+    
+    </div>
+  <%end%>
+</div>
+
+</div>
